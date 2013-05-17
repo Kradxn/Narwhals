@@ -11,24 +11,22 @@ import org.newdawn.slick.Image;
  * Time: 21:07
  */
 public class Entity {
-    boolean rotation=false;
+    boolean rotation = false;
+
     public Entity(Image image) {
         this.image = image;
     }
 
     Image image;
-    int posX,posY;
+    int posX, posY;
 
-    public void render(GameContainer gameContainer, Graphics graphics){
-        image.draw(posX+(rotation?0:(int)(image.getWidth()*0.3)),posY,(int)(image.getWidth()*0.3)*(rotation?1:-1),(int)(image.getHeight() * 0.3));
+    public void render(GameContainer gameContainer, Graphics graphics) {
+        image.draw(posX + (rotation ? 0 : (int) (image.getWidth() * 0.1)), posY, (int) (image.getWidth() * 0.1) * (rotation ? 1 : -1), (int) (image.getHeight() * 0.1));
     }
 
     public void update(GameContainer gameContainer, int delta) {
 
     }
-
-
-
 
 
     public int getPosX() {

@@ -17,8 +17,8 @@ public class Player extends Entity {
 
     public void update(GameContainer gameContainer, int delta) {
          super.update(gameContainer, delta);
-         if(gameContainer.getInput().isKeyDown(Input.KEY_LEFT))posX++;
-         if(gameContainer.getInput().isKeyDown(Input.KEY_RIGHT))posX--;
+         if(gameContainer.getInput().isKeyDown(Input.KEY_LEFT)){posX--;rotation=false; }
+         if(gameContainer.getInput().isKeyDown(Input.KEY_RIGHT)){posX++;rotation=true;}
         if(gameContainer.getInput().isKeyDown(Input.KEY_UP))posY++;
         if(gameContainer.getInput().isKeyDown(Input.KEY_DOWN))posY--;
     }

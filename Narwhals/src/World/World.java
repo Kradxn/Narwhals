@@ -31,7 +31,9 @@ public class World {
 
     public void render(GameContainer gameContainer, Graphics graphics){
        firstBackGround.draw();
-       secondBackGround.draw(player.getPosX(),player.getPosY());
+        //Camera Translation:
+        gameContainer.getGraphics().translate(-player.getPosX()+gameContainer.getWidth()/2,-player.getPosY()+gameContainer.getHeight()/3);
+       secondBackGround.draw();
         for(Entity e:entities){
             e.render(gameContainer,graphics);
         }

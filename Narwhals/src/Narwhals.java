@@ -15,7 +15,7 @@ public class Narwhals extends BasicGame {
 
     @Override
     public void init(GameContainer gameContainer) throws SlickException {
-       currentWorld=new World(new Image("res/firstbackground.png"),new Image("res/secondbackground.png"),null,new Player());
+       currentWorld=new World(new Image("res/firstbackground.png"),new Image("res/secondbackground.png"),null,new Player(new Image("res/narwhals.png")));
     }
 
     @Override

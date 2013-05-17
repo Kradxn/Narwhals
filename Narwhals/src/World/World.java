@@ -35,6 +35,7 @@ public class World {
         for(Entity e:entities){
             e.render(gameContainer,graphics);
         }
+        player.render(gameContainer,graphics);
     }
 
     public void update(GameContainer gameContainer, int delta){

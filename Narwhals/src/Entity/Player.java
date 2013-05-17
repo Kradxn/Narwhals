@@ -1,6 +1,7 @@
 package Entity;
 
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 
 /**
@@ -10,8 +11,12 @@ import org.newdawn.slick.Input;
  * Time: 21:11
  */
 public class Player extends Entity {
+    public Player(Image image) {
+        super(image);
+    }
+
     public void update(GameContainer gameContainer, int delta) {
-         super.update(gameContainer,delta);
+         super.update(gameContainer, delta);
          if(gameContainer.getInput().isKeyDown(Input.KEY_LEFT))posX++;
          if(gameContainer.getInput().isKeyDown(Input.KEY_RIGHT))posX--;
         if(gameContainer.getInput().isKeyDown(Input.KEY_UP))posY++;

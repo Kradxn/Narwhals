@@ -18,6 +18,14 @@ public class Entity {
 
     }
 
+    public void update(GameContainer gameContainer, int delta) {
+
+    }
+
+
+
+
+
     public int getPosX() {
         return posX;
     }

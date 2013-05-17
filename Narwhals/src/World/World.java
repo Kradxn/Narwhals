@@ -37,5 +37,10 @@ public class World {
         }
     }
 
-
+    public void update(GameContainer gameContainer, int delta){
+        for(Entity e:entities){
+            e.update(gameContainer,delta);
+        }
+        player.update(gameContainer,delta);
+    }
 }

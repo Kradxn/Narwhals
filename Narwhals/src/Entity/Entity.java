@@ -12,9 +12,14 @@ import org.newdawn.slick.Image;
  */
 public class Entity {
     boolean rotation = false;
+    int maxhealth = 100;
+    public int health;
+    public int stamina = 100;
+    boolean dead = false;
 
     public Entity(Image image) {
         this.image = image;
+        health = maxhealth;
     }
 
     Image image;
@@ -25,7 +30,9 @@ public class Entity {
     }
 
     public void update(GameContainer gameContainer, int delta) {
-
+        if (health < 0) dead = true;
+        if (stamina < 100) stamina += delta;
+        else stamina = 100;
     }
 
 

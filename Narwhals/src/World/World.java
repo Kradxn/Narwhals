@@ -22,6 +22,7 @@ public class World {
     Image secondBackGround;
     ArrayList<Rectangle> collisions;
     Player player;
+    GUI gui;
     ArrayList<Entity> entities = new ArrayList<Entity>();
     Music music;
 
@@ -31,6 +32,7 @@ public class World {
         this.collisions = collisions;
         this.player = player;
         this.music = music;
+        gui = new GUI(player);
         SoundStore.get().setMusicVolume(0.1F); //TODO OPTION
         music.loop();
     }
@@ -38,12 +40,14 @@ public class World {
     public void render(GameContainer gameContainer, Graphics graphics) {
         firstBackGround.draw();
         //Camera Translation:
-        gameContainer.getGraphics().translate(-player.getPosX() + gameContainer.getWidth() / 2, -player.getPosY() + gameContainer.getHeight() / 3);
+        graphics.translate(-player.getPosX() + gameContainer.getWidth() / 2, -player.getPosY() + gameContainer.getHeight() / 3);
         secondBackGround.draw();
         for (Entity e : entities) {
             e.render(gameContainer, graphics);
         }
         player.render(gameContainer, graphics);
+        graphics.resetTransform();
+        gui.render(gameContainer, graphics);
     }
 
     public void update(GameContainer gameContainer, int delta) {

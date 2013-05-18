@@ -21,10 +21,10 @@ public class GUI {
 
     public void render(GameContainer gameContainer, Graphics graphics) {
         graphics.setColor(Color.red);
-        graphics.fillRect(gameContainer.getWidth(), gameContainer.getHeight(), -player.health * 3, -20);
+        graphics.fillRect(gameContainer.getWidth(), gameContainer.getHeight(), -player.health * 2, -20);
 
 
         graphics.setColor(Color.yellow);
-        graphics.fillRect(gameContainer.getWidth(), gameContainer.getHeight() - 30, -player.stamina * 3, -20);
+        graphics.fillRect(gameContainer.getWidth(), gameContainer.getHeight() - 30, -player.stamina * 2, -20);
     }
 }

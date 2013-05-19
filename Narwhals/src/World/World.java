@@ -61,21 +61,22 @@ public class World {
     }
 
     public static World load(String worldname, Player player) throws SlickException {
-        return new World(new Image("res/worlds/" + worldname + "/firstbackground.png"), new Image("res/worlds/" + worldname + "/secondbackground.png"), null, player, new Music("res/worlds/" + worldname + "/backgroundmusic.wav"));
+        return new World(new Image("res/worlds/" + worldname + "/firstbackground.png"), new Image("res/worlds/" + worldname + "/secondbackground.png"), loadCollisions(worldname), player, new Music("res/worlds/" + worldname + "/backgroundmusic.wav"));
     }
 
     public static ArrayList<Rectangle> loadCollisions(String worldname) {
         ArrayList<Rectangle> collisions = new ArrayList<Rectangle>();
-        InputStream inputStream = ResourceLoader.getResourceAsStream("res/worlds/" + worldname + "collisions,txt");
+        InputStream inputStream = ResourceLoader.getResourceAsStream("res/worlds/" + worldname + "/collisions.txt");
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         try {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 if (!line.startsWith("#")) {
                     String[] coords = line.split(" ");
-                    collisions.add(new Rectangle(Integer.getInteger(coords[0]), Integer.getInteger(coords[1]), Integer.getInteger(coords[2]), Integer.getInteger(coords[3])));
+                    collisions.add(new Rectangle(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[2]), Integer.parseInt(coords[3])));
                 }
             }
+            bufferedReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,5 +1,6 @@
 package Entity;
 
+import World.World;
 import org.newdawn.slick.Image;
 
 /**
@@ -9,7 +10,7 @@ import org.newdawn.slick.Image;
  * Time: 22:48
  */
 public class HostileEntity extends Entity {
-    public HostileEntity(Image image) {
-        super(image);
+    public HostileEntity(Image image, World world) {
+        super(image, world);
     }
 }

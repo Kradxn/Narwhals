@@ -4,6 +4,7 @@ import Entity.Entity;
 import Entity.Player;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.openal.SoundStore;
 import org.newdawn.slick.util.ResourceLoader;
 
@@ -27,8 +28,9 @@ public class World {
     GUI gui;
     ArrayList<Entity> entities = new ArrayList<Entity>();
     Music music;
+    Camera camera;
 
-    public World(Image firstBackGround, Image secondBackGround, ArrayList<Rectangle> collisions, Player player, Music music) {
+    public World(Image firstBackGround, Image secondBackGround, ArrayList<Rectangle> collisions, Player player, Music music, GameContainer gameContainer) {
         this.firstBackGround = firstBackGround;
         this.secondBackGround = secondBackGround;
         this.collisions = collisions;
@@ -37,31 +39,47 @@ public class World {
         gui = new GUI(player);
         SoundStore.get().setMusicVolume(0.1F); //TODO OPTION
         music.loop();
+        player.world = this;
+        camera = new Camera(player, gameContainer);
     }
 
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
         firstBackGround.draw();
         //Camera Translation:
-        graphics.translate(-player.getPosX() + gameContainer.getWidth() / 2, -player.getPosY() + gameContainer.getHeight() / 3);
+        camera.update();
+        graphics.translate(camera.getXTranslation(), camera.getYTranslation());
         secondBackGround.draw();
+        graphics.setColor(Color.orange);
+        for (Rectangle r : collisions) {
+            graphics.drawRect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+        }
         for (Entity e : entities) {
             e.render(gameContainer, graphics);
         }
         player.render(gameContainer, graphics);
-        player.renderStory(graphics, "Ich bin ein    Narwhal ich binAWESOME");
+        //player.renderStory(graphics, "Ich bin ein    Narwhal ich binAWESOME");
+
         graphics.resetTransform();
         gui.render(gameContainer, graphics);
     }
 
     public void update(GameContainer gameContainer, int delta) {
+        if (gameContainer.getInput().isKeyPressed(Input.KEY_E)) new LevelEditor(this, gameContainer);
         for (Entity e : entities) {
-            e.update(gameContainer, delta);
+            e.update(gameContainer, delta, this);
         }
-        player.update(gameContainer, delta);
+        player.update(gameContainer, delta, this);
     }
 
-    public static World load(String worldname, Player player) throws SlickException {
-        return new World(new Image("res/worlds/" + worldname + "/firstbackground.png"), new Image("res/worlds/" + worldname + "/secondbackground.png"), loadCollisions(worldname), player, new Music("res/worlds/" + worldname + "/backgroundmusic.wav"));
+    public boolean isCollided(Shape shape) {
+        for (Rectangle e : collisions) {
+            if (e.intersects(shape)) return true;
+        }
+        return false;
+    }
+
+    public static World load(String worldname, Player player, GameContainer gameContainer) throws SlickException {
+        return new World(new Image("res/worlds/" + worldname + "/firstbackground.png"), new Image("res/worlds/" + worldname + "/secondbackground.png"), loadCollisions(worldname), player, new Music("res/worlds/" + worldname + "/backgroundmusic.wav"), gameContainer);
     }
 
     public static ArrayList<Rectangle> loadCollisions(String worldname) {

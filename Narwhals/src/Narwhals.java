@@ -17,7 +17,9 @@ public class Narwhals extends BasicGame {
 
     @Override
     public void init(GameContainer gameContainer) throws SlickException {
-        currentWorld = World.load("world1", new Player(new Image("res/narwhals.png")));
+        gameContainer.setVSync(true);
+        gameContainer.setSmoothDeltas(true);
+        currentWorld = World.load("world1", new Player(new Image("res/narwhals.png"), currentWorld), gameContainer);
     }
 
     @Override
@@ -27,6 +29,7 @@ public class Narwhals extends BasicGame {
 
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
+        graphics.setLineWidth(5);
         currentWorld.render(gameContainer, graphics);
     }
 

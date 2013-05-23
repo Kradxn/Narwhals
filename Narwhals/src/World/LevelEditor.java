@@ -17,7 +17,7 @@ public class LevelEditor implements MouseListener {
 
     private World world;
     private GameContainer gameContainer;
-    int clickX, clickY;
+    float clickX, clickY;
 
     public LevelEditor(World world, GameContainer gameContainer) {
         this.world = world;
@@ -35,14 +35,32 @@ public class LevelEditor implements MouseListener {
 
     @Override
     public void mousePressed(int i, int i2, int i3) {
-        clickX = (int) (i2 - world.camera.getXTranslation());
-        clickY = (int) (i3 - world.camera.getYTranslation());
+        if (i == Input.MOUSE_LEFT_BUTTON) {
+            clickX = (i2 - world.camera.getXTranslation());
+            clickY = (i3 - world.camera.getYTranslation());
+        }
     }
 
     @Override
     public void mouseReleased(int i, int i2, int i3) {
-        world.collisions.add(new Rectangle(clickX, clickY, -(clickX - (i2 - world.camera.getXTranslation())), -(clickY - (i3 - world.camera.getYTranslation()))));
+        if (i == Input.MOUSE_LEFT_BUTTON) {
+            float x = clickX;
+            float y = clickY;
+            float widht = -(clickX - (i2 - world.camera.getXTranslation()));
+            float height = -(clickY - (i3 - world.camera.getYTranslation()));
+            if (widht < 0) {
+                x = i2 - world.camera.getXTranslation();
+                widht = -i2 + clickX + world.camera.getXTranslation();
+            }
+            if (height < 0) {
+                y = i3 - world.camera.getYTranslation();
+                height = -i3 + clickY + world.camera.getYTranslation();
+            }
 
+            world.collisions.add(new Rectangle(x, y, widht, height));
+        } else {
+            world.collisions.remove(world.collisions.size() - 1);
+        }
     }
 
     @Override

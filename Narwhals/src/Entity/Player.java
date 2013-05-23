@@ -20,11 +20,9 @@ public class Player extends Entity {
         super.update(gameContainer, delta, world);
         if (gameContainer.getInput().isKeyDown(Input.KEY_LEFT) && canMoveLeft(delta)) {
             velocityX -= 20;
-            rotation = false;
         }
         if (gameContainer.getInput().isKeyDown(Input.KEY_RIGHT) && canMoveRight(delta)) {
             velocityX += 20;
-            rotation = true;
         }
         if (gameContainer.getInput().isKeyDown(Input.KEY_UP) && canMoveUp(delta) && !canMoveDown(delta))
             velocityY = -80;

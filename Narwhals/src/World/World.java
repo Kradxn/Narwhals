@@ -1,6 +1,7 @@
 package World;
 
 import Entity.Entity;
+import Entity.HostileEntity;
 import Entity.Player;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
@@ -24,13 +25,13 @@ public class World {
     Image firstBackGround;
     Image secondBackGround;
     ArrayList<Rectangle> collisions;
-    Player player;
+    public Player player;
     GUI gui;
     ArrayList<Entity> entities = new ArrayList<Entity>();
     Music music;
     Camera camera;
 
-    public World(Image firstBackGround, Image secondBackGround, ArrayList<Rectangle> collisions, Player player, Music music, GameContainer gameContainer) {
+    public World(Image firstBackGround, Image secondBackGround, ArrayList<Rectangle> collisions, Player player, Music music, GameContainer gameContainer) throws SlickException {
         this.firstBackGround = firstBackGround;
         this.secondBackGround = secondBackGround;
         this.collisions = collisions;
@@ -41,6 +42,7 @@ public class World {
         music.loop();
         player.world = this;
         camera = new Camera(player, gameContainer);
+        entities.add(new HostileEntity(new Image("res/hostile.png"), this));
     }
 
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
@@ -51,7 +53,7 @@ public class World {
         secondBackGround.draw();
         graphics.setColor(Color.orange);
         for (Rectangle r : collisions) {
-            graphics.drawRect(r.getX(), r.getY(), r.getWidth(), r.getHeight());
+            graphics.draw(r);
         }
         for (Entity e : entities) {
             e.render(gameContainer, graphics);

@@ -1,6 +1,6 @@
-package World;
+package WorldP;
 
-import Entity.Player;
+import EntityP.Player;
 import org.newdawn.slick.GameContainer;
 
 /**

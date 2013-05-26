@@ -1,5 +1,5 @@
-import Entity.Player;
-import World.World;
+import EntityP.Player;
+import WorldP.World;
 import org.newdawn.slick.*;
 
 /**

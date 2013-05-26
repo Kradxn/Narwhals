@@ -1,6 +1,6 @@
-package Entity;
+package EntityP;
 
-import World.World;
+import WorldP.World;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 
@@ -11,11 +11,14 @@ import org.newdawn.slick.geom.Rectangle;
  * Time: 21:07
  */
 public class Entity {
+    protected double frictionX = 0.7;
+    protected double frictionY = 0.99;
+    protected double gravity = 0.2;
     boolean rotation = false;
     int maxhealth = 100;
     public int health;
-    public int stamina = 100;
-    boolean dead = false;
+    public float stamina = 100;
+    public boolean dead = false;
     public Rectangle rect;
     Image image;
     Animation idle;
@@ -25,6 +28,7 @@ public class Entity {
     int aniHeight;
     public World world;
     float velocityX, velocityY;
+    attr team = attr.neutral;
 
     public Entity(Image image, World world) {
         this.image = image;
@@ -50,7 +54,7 @@ public class Entity {
 
     public void update(GameContainer gameContainer, int delta, World world) {
         if (health < 0) dead = true;
-        if (stamina < 100) stamina += delta;
+        if (stamina < 100) stamina += delta * 0.03F;
         else stamina = 100;
 
 
@@ -73,12 +77,12 @@ public class Entity {
             if (velocityY > 0) {
                 rect.setY((float) (rect.getY() + velocityY * 0.01 * delta));
             }
-            velocityY += delta * 0.2;
+            velocityY += delta * gravity;
         } else if (velocityY > 0) {
             velocityY = 0;
         }
-        velocityX *= 0.7;
-        velocityY *= 0.99;
+        velocityX *= frictionX;
+        velocityY *= frictionY;
         if (velocityX != 0) rotation = velocityX > 0;
     }
 

@@ -1,8 +1,8 @@
-package World;
+package WorldP;
 
-import Entity.Entity;
-import Entity.HostileEntity;
-import Entity.Player;
+import EntityP.Entity;
+import EntityP.HostileEntity;
+import EntityP.Player;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -27,7 +28,7 @@ public class World {
     ArrayList<Rectangle> collisions;
     public Player player;
     GUI gui;
-    ArrayList<Entity> entities = new ArrayList<Entity>();
+    public CopyOnWriteArrayList<Entity> entities = new CopyOnWriteArrayList<Entity>();
     Music music;
     Camera camera;
 
@@ -36,6 +37,7 @@ public class World {
         this.secondBackGround = secondBackGround;
         this.collisions = collisions;
         this.player = player;
+        entities.add(player);
         this.music = music;
         gui = new GUI(player);
         SoundStore.get().setMusicVolume(0.1F); //TODO OPTION
@@ -58,7 +60,6 @@ public class World {
         for (Entity e : entities) {
             e.render(gameContainer, graphics);
         }
-        player.render(gameContainer, graphics);
         //player.renderStory(graphics, "Ich bin ein    Narwhal ich binAWESOME");
 
         graphics.resetTransform();
@@ -69,8 +70,8 @@ public class World {
         if (gameContainer.getInput().isKeyPressed(Input.KEY_E)) new LevelEditor(this, gameContainer);
         for (Entity e : entities) {
             e.update(gameContainer, delta, this);
+            if (e.dead) entities.remove(e);
         }
-        player.update(gameContainer, delta, this);
     }
 
     public boolean isCollided(Shape shape) {
@@ -103,5 +104,13 @@ public class World {
 
 
         return collisions;
+    }
+
+    public ArrayList<Entity> getEntitiesinRectangle(Rectangle rect) {
+        ArrayList<Entity> list = new ArrayList<Entity>();
+        for (Entity e : entities) {
+            if (rect.intersects(e.rect)) list.add(e);
+        }
+        return list;
     }
 }

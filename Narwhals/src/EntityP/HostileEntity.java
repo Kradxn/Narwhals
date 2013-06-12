@@ -32,7 +32,7 @@ public class HostileEntity extends Entity {
                     velocityX += 4;
                     if (!canMoveRight(delta) && !canMoveDown(delta)) velocityY = -80;
                 }
-            } else {
+            } else if (Math.abs(player.getDistanceY(this)) < 100) {
                 if (attackCoolDown == 0) {
                     attack();
                     attackCoolDown = 100;
@@ -47,6 +47,7 @@ public class HostileEntity extends Entity {
     }
 
     private void attack() {
+        correctRotation();
         if (rotation)
             try {
                 world.entities.add(new Projectile(new Image("res/hostile.png"), world, rect.getX() + rect.getWidth() + 10, rect.getY(), 50F, team));
@@ -61,5 +62,9 @@ public class HostileEntity extends Entity {
             }
 
         }
+    }
+
+    private void correctRotation() {
+        rotation = getPlayerinReach().getDistanceX(this) > 0;
     }
 }

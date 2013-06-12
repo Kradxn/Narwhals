@@ -5,7 +5,6 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.MouseListener;
 import org.newdawn.slick.geom.Rectangle;
 
-//import org.newdawn.slick.Input;
 
 /**
  * Created with IntelliJ IDEA.

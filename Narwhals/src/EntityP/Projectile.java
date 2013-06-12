@@ -16,11 +16,11 @@ public class Projectile extends Entity {
 
     public Projectile(Image image, World world) {
         super(image, world);
-        rect.setWidth(50);
-        rect.setHeight(70);
+        rect.setWidth(125);
+        rect.setHeight(50);
         gravity = 0;
         frictionX = 1;
-
+        setUpAnimation(image, 1);
     }
 
     public Projectile(Image image, World world, float x, float y, float velocityX, attr team) {

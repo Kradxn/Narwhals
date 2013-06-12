@@ -32,23 +32,29 @@ public class Entity {
 
     public Entity(Image image, World world) {
         this.image = image;
+        setUpAnimation(image, aniNum);
+        this.world = world;
+        health = maxhealth;
+        rect = new Rectangle(0, -300, 100, 130);
+    }
+
+    protected void setUpAnimation(Image image, int aniNum) {
         aniWidght = image.getWidth() / aniNum;
         aniHeight = image.getHeight();
         idle = new Animation();
         for (int i = 0; i < aniNum; i++) {
             idle.addFrame(image.getSubImage(i * aniWidght, 0, aniWidght, aniHeight), aniDur);
         }
-        this.world = world;
-        health = maxhealth;
-        rect = new Rectangle(0, -300, 100, 130);
     }
 
 
     public void render(GameContainer gameContainer, Graphics graphics) {
         //image.draw(rect.getX() + (rotation ? 0 : rect.getWidth()), rect.getY(), rect.getWidth() * (rotation ? 1 : -1), rect.getHeight());
         idle.draw(rect.getX() + (rotation ? 0 : rect.getWidth()), rect.getY(), rect.getWidth() * (rotation ? 1 : -1), rect.getHeight());
-        graphics.setColor(Color.blue);
-        graphics.draw(rect);
+        if (world.debug) {
+            graphics.setColor(Color.blue);
+            graphics.draw(rect);
+        }
         graphics.setColor(Color.orange);
     }
 
@@ -120,12 +126,15 @@ public class Entity {
 
     public boolean isLessPAway(int p, Entity entity) {
         float distanceX = getDistanceX(entity);
-        float distanceY = Math.max(rect.getY(), entity.rect.getY()) - Math.min(rect.getY(), entity.rect.getY());
         if (distanceX < p) return true;
         return false;
     }
 
     public float getDistanceX(Entity entity) {
         return (rect.getX() - entity.rect.getX());
+    }
+
+    public float getDistanceY(Entity entity) {
+        return (rect.getY() - entity.rect.getY());
     }
 }

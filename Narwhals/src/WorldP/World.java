@@ -23,6 +23,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * Time: 21:02
  */
 public class World {
+    public boolean debug = true;
     Image firstBackGround;
     Image secondBackGround;
     ArrayList<Rectangle> collisions;
@@ -30,7 +31,7 @@ public class World {
     GUI gui;
     public CopyOnWriteArrayList<Entity> entities = new CopyOnWriteArrayList<Entity>();
     Music music;
-    Camera camera;
+    public Camera camera;
 
     public World(Image firstBackGround, Image secondBackGround, ArrayList<Rectangle> collisions, Player player, Music music, GameContainer gameContainer) throws SlickException {
         this.firstBackGround = firstBackGround;
@@ -41,7 +42,7 @@ public class World {
         this.music = music;
         gui = new GUI(player);
         SoundStore.get().setMusicVolume(0.1F); //TODO OPTION
-        music.loop();
+        if (!debug) music.loop();
         player.world = this;
         camera = new Camera(player, gameContainer);
         entities.add(new HostileEntity(new Image("res/hostile.png"), this));
@@ -53,9 +54,11 @@ public class World {
         camera.update();
         graphics.translate(camera.getXTranslation(), camera.getYTranslation());
         secondBackGround.draw();
-        graphics.setColor(Color.orange);
-        for (Rectangle r : collisions) {
-            graphics.draw(r);
+        if (debug) {
+            graphics.setColor(Color.orange);
+            for (Rectangle r : collisions) {
+                graphics.draw(r);
+            }
         }
         for (Entity e : entities) {
             e.render(gameContainer, graphics);

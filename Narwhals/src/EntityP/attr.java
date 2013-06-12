@@ -1,4 +1,4 @@
-package Entity;
+package EntityP;
 
 /**
  * Created with IntelliJ IDEA.

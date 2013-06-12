@@ -1,6 +1,6 @@
-package World;
+package WorldP;
 
-import Entity.Player;
+import EntityP.Player;
 import org.newdawn.slick.GameContainer;
 
 /**
@@ -21,12 +21,10 @@ public class Camera {
 
     public float getXTranslation() {
         return Xtrans;
-        //return -player.rect.getX() + gameContainer.getWidth() / 2;
     }
 
     public float getYTranslation() {
         return Ytrans;
-        //return -player.rect.getY() + gameContainer.getHeight() / 3;
     }
 
 
@@ -36,7 +34,7 @@ public class Camera {
         if (Xtrans < -player.rect.getX() + gameContainer.getWidth() / 4)
             Xtrans = -player.rect.getX() + gameContainer.getWidth() / 4;
         if (Ytrans < -player.rect.getY() + gameContainer.getHeight() / 5)
-            Ytrans = -player.rect.getY() + gameContainer.getHeight() / 5F;
+            Ytrans = -player.rect.getY() + gameContainer.getHeight() / 5;
         if (Ytrans > -player.rect.getY() + gameContainer.getHeight() - gameContainer.getHeight() / 2.5)
             Ytrans = -player.rect.getY() + gameContainer.getHeight() - gameContainer.getHeight() / 2.5F;
     }

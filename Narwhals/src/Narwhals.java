@@ -1,5 +1,5 @@
-import Entity.Player;
-import World.World;
+import EntityP.Player;
+import WorldP.World;
 import org.newdawn.slick.*;
 
 /**
@@ -19,6 +19,8 @@ public class Narwhals extends BasicGame {
     public void init(GameContainer gameContainer) throws SlickException {
         gameContainer.setVSync(true);
         gameContainer.setSmoothDeltas(true);
+        gameContainer.setMinimumLogicUpdateInterval(5);
+        gameContainer.setMaximumLogicUpdateInterval(5);
         currentWorld = World.load("world1", new Player(new Image("res/narwhals.png"), currentWorld), gameContainer);
     }
 
@@ -29,7 +31,7 @@ public class Narwhals extends BasicGame {
 
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
-        graphics.setLineWidth(5);
+        graphics.setLineWidth(3);
         currentWorld.render(gameContainer, graphics);
     }
 

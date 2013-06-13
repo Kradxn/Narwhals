@@ -50,13 +50,13 @@ public class HostileEntity extends Entity {
         correctRotation();
         if (rotation)
             try {
-                world.entities.add(new Projectile(new Image("res/hostile.png"), world, rect.getX() + rect.getWidth() + 10, rect.getY(), 50F, team));
+                world.entities.add(new Projectile(new Image("res/projectile_F.png"), world, rect.getX() + rect.getWidth() + 10, rect.getY(), 50F, team));
             } catch (SlickException e) {
                 e.printStackTrace();
             }
         else {
             try {
-                world.entities.add(new Projectile(new Image("res/hostile.png"), world, rect.getX() - 50, rect.getY(), -50F, team));
+                world.entities.add(new Projectile(new Image("res/projectile_F.png"), world, rect.getX() - 50, rect.getY(), -50F, team));
             } catch (SlickException e) {
                 e.printStackTrace();
             }

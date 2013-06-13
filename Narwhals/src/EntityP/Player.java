@@ -39,6 +39,12 @@ public class Player extends Entity {
             System.out.println((gameContainer.getInput().getMouseX() - world.camera.getXTranslation()) + " " + (-gameContainer.getInput().getMouseY() + world.camera.getYTranslation()));
         if (gameContainer.getInput().isKeyPressed(Input.KEY_SPACE)) attack();
         if (gameContainer.getInput().isKeyPressed(Input.KEY_F1)) world.debug = !world.debug;
+        if (gameContainer.getInput().isKeyPressed(Input.KEY_F2)) try {
+            world.entities.add(new HostileEntity(new Image("res/hostile.png"), world));
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
+        ;
     }
 
     private void attack() {

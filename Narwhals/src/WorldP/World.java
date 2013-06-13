@@ -1,7 +1,6 @@
 package WorldP;
 
 import EntityP.Entity;
-import EntityP.HostileEntity;
 import EntityP.Player;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
@@ -45,7 +44,6 @@ public class World {
         if (!debug) music.loop();
         player.world = this;
         camera = new Camera(player, gameContainer);
-        entities.add(new HostileEntity(new Image("res/hostile.png"), this));
     }
 
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {

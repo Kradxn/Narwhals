@@ -1,5 +1,6 @@
 package EntityP;
 
+import WorldP.TextureProvider;
 import WorldP.World;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
@@ -20,7 +21,6 @@ public class Entity {
     public float stamina = 100;
     public boolean dead = false;
     public Rectangle rect;
-    Image image;
     Animation idle;
     int aniNum = 3;
     int aniDur = 200;
@@ -29,28 +29,20 @@ public class Entity {
     public World world;
     float velocityX, velocityY;
     attr team = attr.neutral;
+    private String animationName;
 
-    public Entity(Image image, World world) {
-        this.image = image;
-        setUpAnimation(image, aniNum);
+    public Entity(World world, String animationName) {
+        idle = TextureProvider.getAnimationforName(animationName);
         this.world = world;
         health = maxhealth;
         rect = new Rectangle(0, -300, 100, 130);
-    }
-
-    protected void setUpAnimation(Image image, int aniNum) {
-        aniWidght = image.getWidth() / aniNum;
-        aniHeight = image.getHeight();
-        idle = new Animation();
-        for (int i = 0; i < aniNum; i++) {
-            idle.addFrame(image.getSubImage(i * aniWidght, 0, aniWidght, aniHeight), aniDur);
-        }
+        this.animationName = animationName;
     }
 
 
     public void render(GameContainer gameContainer, Graphics graphics) {
         //image.draw(rect.getX() + (rotation ? 0 : rect.getWidth()), rect.getY(), rect.getWidth() * (rotation ? 1 : -1), rect.getHeight());
-        idle.draw(rect.getX() + (rotation ? 0 : rect.getWidth()), rect.getY(), rect.getWidth() * (rotation ? 1 : -1), rect.getHeight());
+        TextureProvider.getAnimationforName(animationName).draw(rect.getX() + (rotation ? 0 : rect.getWidth()), rect.getY(), rect.getWidth() * (rotation ? 1 : -1), rect.getHeight());
         if (world.debug) {
             graphics.setColor(Color.blue);
             graphics.draw(rect);

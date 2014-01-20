@@ -17,6 +17,12 @@ public class HostileEntity extends Entity {
         team = attr.hostile;
     }
 
+    public HostileEntity(World world, String aniName, int x, int y) {
+        this(world, aniName);
+        rect.setX(x);
+        rect.setY(y);
+    }
+
     @Override
     public void update(GameContainer gameContainer, int delta, World world) {
         super.update(gameContainer, delta, world);
@@ -30,11 +36,13 @@ public class HostileEntity extends Entity {
                     velocityX += 4;
                     if (!canMoveRight(delta) && !canMoveDown(delta)) velocityY = -80;
                 }
-            } else if (Math.abs(player.getDistanceY(this)) < 100) {
+            } else if (Math.abs(player.getDistanceY(this)) < 50) {
                 if (attackCoolDown == 0) {
                     attack();
                     attackCoolDown = 400;
                 }
+            } else {
+                velocityX *= 1.43;
             }
         }
         if (attackCoolDown > 0) attackCoolDown--;

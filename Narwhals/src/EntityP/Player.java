@@ -13,8 +13,8 @@ import org.newdawn.slick.Input;
 public class Player extends Entity {
     public Player(World world, String aniName) {
         super(world, aniName);
-        rect.setX(600);
-        rect.setY(500);
+        rect.setX(1000);
+        rect.setY(600);
         team = attr.friendly;
     }
 
@@ -38,7 +38,7 @@ public class Player extends Entity {
         if (gameContainer.getInput().isKeyPressed(Input.KEY_SPACE)) attack();
         if (gameContainer.getInput().isKeyPressed(Input.KEY_F1)) world.debug = !world.debug;
         if (gameContainer.getInput().isKeyPressed(Input.KEY_F2))
-            world.entities.add(new HostileEntity(world, "hostile"));
+            world.entities.add(new HostileEntity(world, "hostile", 200, 600));
 
 
     }

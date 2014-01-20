@@ -1,4 +1,5 @@
 import EntityP.Player;
+import WorldP.TextureProvider;
 import WorldP.World;
 import org.newdawn.slick.*;
 
@@ -21,7 +22,15 @@ public class Narwhals extends BasicGame {
         gameContainer.setSmoothDeltas(true);
         gameContainer.setMinimumLogicUpdateInterval(5);
         gameContainer.setMaximumLogicUpdateInterval(5);
-        currentWorld = World.load("world1", new Player(new Image("res/narwhals.png"), currentWorld), gameContainer);
+        preloadTextures();
+        currentWorld = World.load("world1", new Player(currentWorld, "narwhal"), gameContainer);
+    }
+
+    private void preloadTextures() throws SlickException {
+        TextureProvider.registerAnimationbyPath("narwhal", "narwhals", 3, 10);
+        TextureProvider.registerAnimationbyPath("projectileF", "projectile_F", 1, 10);
+        TextureProvider.registerAnimationbyPath("projectileEis", "projectile_eis", 1, 10);
+        TextureProvider.registerAnimationbyPath("hostile", "hostile", 3, 10);
     }
 
     @Override

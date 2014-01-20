@@ -2,8 +2,6 @@ package EntityP;
 
 import WorldP.World;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,9 +12,15 @@ import org.newdawn.slick.SlickException;
 public class HostileEntity extends Entity {
     private int attackCoolDown;
 
-    public HostileEntity(Image image, World world) {
-        super(image, world);
+    public HostileEntity(World world, String aniName) {
+        super(world, aniName);
         team = attr.hostile;
+    }
+
+    public HostileEntity(World world, String aniName, int x, int y) {
+        this(world, aniName);
+        rect.setX(x);
+        rect.setY(y);
     }
 
     @Override
@@ -32,11 +36,13 @@ public class HostileEntity extends Entity {
                     velocityX += 4;
                     if (!canMoveRight(delta) && !canMoveDown(delta)) velocityY = -80;
                 }
-            } else if (Math.abs(player.getDistanceY(this)) < 100) {
+            } else if (Math.abs(player.getDistanceY(this)) < 50) {
                 if (attackCoolDown == 0) {
                     attack();
-                    attackCoolDown = 100;
+                    attackCoolDown = 400;
                 }
+            } else {
+                velocityX *= 1.43;
             }
         }
         if (attackCoolDown > 0) attackCoolDown--;
@@ -49,17 +55,12 @@ public class HostileEntity extends Entity {
     private void attack() {
         correctRotation();
         if (rotation)
-            try {
-                world.entities.add(new Projectile(new Image("res/hostile.png"), world, rect.getX() + rect.getWidth() + 10, rect.getY(), 50F, team));
-            } catch (SlickException e) {
-                e.printStackTrace();
-            }
+
+            world.entities.add(new Projectile(world, "projectileF", rect.getX() + rect.getWidth() + 10, rect.getY(), 50F, team));
+
         else {
-            try {
-                world.entities.add(new Projectile(new Image("res/hostile.png"), world, rect.getX() - 50, rect.getY(), -50F, team));
-            } catch (SlickException e) {
-                e.printStackTrace();
-            }
+            world.entities.add(new Projectile(world, "projectileF", rect.getX() - 50, rect.getY(), -50F, team));
+
 
         }
     }

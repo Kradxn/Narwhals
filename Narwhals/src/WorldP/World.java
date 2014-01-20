@@ -1,7 +1,6 @@
 package WorldP;
 
 import EntityP.Entity;
-import EntityP.HostileEntity;
 import EntityP.Player;
 import org.newdawn.slick.*;
 import org.newdawn.slick.geom.Rectangle;
@@ -24,8 +23,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class World {
     public boolean debug = true;
-    Image firstBackGround;
-    Image secondBackGround;
+    String worldname;
     ArrayList<Rectangle> collisions;
     public Player player;
     GUI gui;
@@ -33,9 +31,8 @@ public class World {
     Music music;
     public Camera camera;
 
-    public World(Image firstBackGround, Image secondBackGround, ArrayList<Rectangle> collisions, Player player, Music music, GameContainer gameContainer) throws SlickException {
-        this.firstBackGround = firstBackGround;
-        this.secondBackGround = secondBackGround;
+    public World(String worldname, ArrayList<Rectangle> collisions, Player player, Music music, GameContainer gameContainer) throws SlickException {
+        this.worldname = worldname;
         this.collisions = collisions;
         this.player = player;
         entities.add(player);
@@ -45,15 +42,14 @@ public class World {
         if (!debug) music.loop();
         player.world = this;
         camera = new Camera(player, gameContainer);
-        entities.add(new HostileEntity(new Image("res/hostile.png"), this));
     }
 
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
-        firstBackGround.draw();
+        TextureProvider.getImageforName(worldname + "firstbackground").draw();
         //Camera Translation:
         camera.update();
         graphics.translate(camera.getXTranslation(), camera.getYTranslation());
-        secondBackGround.draw();
+        TextureProvider.getImageforName(worldname + "secondbackground").draw();
         if (debug) {
             graphics.setColor(Color.orange);
             for (Rectangle r : collisions) {
@@ -85,7 +81,18 @@ public class World {
     }
 
     public static World load(String worldname, Player player, GameContainer gameContainer) throws SlickException {
-        return new World(new Image("res/worlds/" + worldname + "/firstbackground.png"), new Image("res/worlds/" + worldname + "/secondbackground.png"), loadCollisions(worldname), player, new Music("res/worlds/" + worldname + "/backgroundmusic.wav"), gameContainer);
+        TextureProvider.registerTexutrebyPath(worldname + "firstbackground", "worlds/" + worldname + "/firstbackground");
+        TextureProvider.registerTexutrebyPath(worldname + "secondbackground", "worlds/" + worldname + "/secondbackground");
+        return new World(worldname, loadCollisions(worldname), player, new Music("res/worlds/" + worldname + "/backgroundmusic.wav"), gameContainer);
+    }
+
+    public Player unload() {
+        entities.clear();
+        Player p = player;
+        player = null;
+        TextureProvider.unregisterTexture(worldname + "firstbackground");
+        TextureProvider.unregisterTexture(worldname + "secondtbackground");
+        return player;
     }
 
     public static ArrayList<Rectangle> loadCollisions(String worldname) {

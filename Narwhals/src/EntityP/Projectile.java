@@ -2,7 +2,6 @@ package EntityP;
 
 import WorldP.World;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Image;
 
 import java.util.ArrayList;
 
@@ -14,17 +13,16 @@ import java.util.ArrayList;
 public class Projectile extends Entity {
     int ticks = 0;
 
-    public Projectile(Image image, World world) {
-        super(image, world);
+    public Projectile(World world, String aniName) {
+        super(world, aniName);
         rect.setWidth(125);
         rect.setHeight(50);
         gravity = 0;
         frictionX = 1;
-        setUpAnimation(image, 1);
     }
 
-    public Projectile(Image image, World world, float x, float y, float velocityX, attr team) {
-        this(image, world);
+    public Projectile(World world, String aniName, float x, float y, float velocityX, attr team) {
+        this(world, aniName);
         rect.setX(x);
         rect.setY(y);
         this.velocityX = velocityX;

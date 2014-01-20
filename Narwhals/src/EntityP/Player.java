@@ -2,9 +2,7 @@ package EntityP;
 
 import WorldP.World;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,10 +11,10 @@ import org.newdawn.slick.SlickException;
  * Time: 21:11
  */
 public class Player extends Entity {
-    public Player(Image image, World world) {
-        super(image, world);
-        rect.setX(600);
-        rect.setY(500);
+    public Player(World world, String aniName) {
+        super(world, aniName);
+        rect.setX(1000);
+        rect.setY(600);
         team = attr.friendly;
     }
 
@@ -39,23 +37,19 @@ public class Player extends Entity {
             System.out.println((gameContainer.getInput().getMouseX() - world.camera.getXTranslation()) + " " + (-gameContainer.getInput().getMouseY() + world.camera.getYTranslation()));
         if (gameContainer.getInput().isKeyPressed(Input.KEY_SPACE)) attack();
         if (gameContainer.getInput().isKeyPressed(Input.KEY_F1)) world.debug = !world.debug;
+        if (gameContainer.getInput().isKeyPressed(Input.KEY_F2))
+            world.entities.add(new HostileEntity(world, "hostile", 200, 600));
+
+
     }
 
     private void attack() {
         if (stamina > 10) {
             stamina -= 10;
             if (rotation)
-                try {
-                    world.entities.add(new Projectile(new Image("res/projectile_eis.png"), world, rect.getX() + rect.getWidth() + 10, rect.getY(), 50F, team));
-                } catch (SlickException e) {
-                    e.printStackTrace();
-                }
+                world.entities.add(new Projectile(world, "projectileEis", rect.getX() + rect.getWidth() + 10, rect.getY(), 50F, team));
             else {
-                try {
-                    world.entities.add(new Projectile(new Image("res/projectile_eis.png"), world, rect.getX() - 50, rect.getY(), -50F, team));
-                } catch (SlickException e) {
-                    e.printStackTrace();
-                }
+                world.entities.add(new Projectile(world, "projectileEis", rect.getX() - 50, rect.getY(), -50F, team));
             }
 
         }
